@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Georgia Milestones Science | Matter & Particle Models</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b4e;
+    --gold: #c8962a;
+    --gold-light: #f0c25a;
+    --cream: #faf7f2;
+    --red: #b0321e;
+    --green: #1e6b3c;
+    --slate: #4a5568;
+    --border: #d4c9b8;
+    --drag-bg: #e8f0fb;
+    --drag-border: #3b6fa0;
+    --vocab-amber: #f59e0b;
+    --vocab-amber-light: #fef3c7;
+    --white: #ffffff;
+    --shadow: 0 2px 12px rgba(13,43,78,0.10);
+    --shadow-lg: 0 8px 32px rgba(13,43,78,0.16);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .sim-header {
+    background: var(--navy);
+    color: white;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .sim-header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .sim-header-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+  }
+  .sim-header-sub {
+    font-size: 0.72rem;
+    color: var(--gold-light);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+  .progress-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .progress-label {
+    font-size: 0.7rem;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .progress-bar-outer {
+    width: 140px;
+    height: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-inner {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── COVER SCREEN ── */
+  #screen-cover {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 0 20px;
+  }
+  .cover-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .cover-banner {
+    background: var(--navy);
+    padding: 36px 40px 28px;
+    color: white;
+  }
+  .cover-eyebrow {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+  }
+  .cover-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+  .cover-subtitle {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .cover-meta-item {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .cover-meta-item strong {
+    font-size: 1rem;
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+  .cover-form {
+    padding: 32px 40px;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--slate);
+    margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--navy);
+    background: var(--cream);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--navy); background: white; }
+  .form-select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--navy);
+    background: var(--cream);
+    transition: border-color 0.2s;
+    outline: none;
+    cursor: pointer;
+  }
+  .form-select:focus { border-color: var(--navy); }
+  .directions-box {
+    background: #eef3f8;
+    border-left: 4px solid var(--navy);
+    border-radius: 4px;
+    padding: 14px 16px;
+    font-size: 0.85rem;
+    color: var(--slate);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .directions-box strong { color: var(--navy); }
+  .btn-start {
+    width: 100%;
+    padding: 14px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-start:hover { background: #1a3a5c; transform: translateY(-1px); }
+  .btn-start:active { transform: translateY(0); }
+
+  /* ── QUESTION SCREEN ── */
+  #screen-question {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 20px 80px;
+  }
+
+  .question-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .question-header {
+    background: var(--navy);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .q-number {
+    font-family: 'Libre Baskerville', serif;
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+  .q-badges {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .badge-dok1 { background: #e0f2fe; color: #0369a1; }
+  .badge-dok2 { background: #fef3c7; color: #92400e; }
+  .badge-dok3 { background: #f3e8ff; color: #6b21a8; }
+  .badge-type { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+
+  .vocab-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    background: transparent;
+    color: rgba(255,255,255,0.75);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .vocab-btn:hover { border-color: var(--vocab-amber); color: var(--gold-light); }
+  .vocab-btn.flagged { background: var(--vocab-amber); border-color: var(--vocab-amber); color: white; }
+  .vocab-flag-icon { font-size: 0.9em; }
+
+  .question-body {
+    padding: 24px 28px;
+  }
+  .stimulus {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: #333;
+  }
+  .stimulus p { margin-bottom: 8px; }
+  .stimulus p:last-child { margin-bottom: 0; }
+
+  /* Particle diagram SVGs */
+  .diagram-row {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 14px 0;
+  }
+  .diagram-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .diagram-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--slate);
+  }
+  .diagram-container {
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    background: white;
+    overflow: hidden;
+  }
+
+  .question-stem {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.55;
+    color: var(--navy);
+    margin-bottom: 18px;
+  }
+  .multi-note {
+    font-size: 0.78rem;
+    color: var(--slate);
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+
+  /* Selected Response */
+  .options-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .option-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 13px 16px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.18s;
+    background: white;
+  }
+  .option-item:hover { border-color: var(--navy); background: #f0f4f8; }
+  .option-item.selected { border-color: var(--navy); background: #eef3fa; }
+  .option-letter {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--slate);
+    flex-shrink: 0;
+    transition: all 0.18s;
+  }
+  .option-item.selected .option-letter { background: var(--navy); border-color: var(--navy); color: white; }
+  .option-text { font-size: 0.95rem; line-height: 1.5; padding-top: 2px; }
+
+  /* Multi-select */
+  .multi-option { }
+  .multi-option.selected { border-color: #1a56a0; background: #eaf1fb; }
+  .multi-option.selected .option-letter { background: #1a56a0; border-color: #1a56a0; color: white; }
+
+  /* Drag and Drop */
+  .drag-area {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .drag-bank-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--slate);
+    margin-bottom: 8px;
+  }
+  .drag-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px;
+    background: var(--cream);
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    min-height: 54px;
+  }
+  .drag-chip {
+    padding: 7px 16px;
+    background: white;
+    border: 2px solid var(--drag-border);
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--drag-border);
+    cursor: grab;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .drag-chip:hover { background: var(--drag-bg); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+  .drag-chip.dragging { opacity: 0.4; cursor: grabbing; }
+  .drag-chip.in-target { background: var(--drag-bg); border-color: var(--navy); color: var(--navy); cursor: grab; }
+
+  .drop-table { width: 100%; border-collapse: collapse; }
+  .drop-table th {
+    background: var(--navy);
+    color: white;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    text-align: left;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .drop-table td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    vertical-align: top;
+    background: white;
+  }
+  .drop-table td:first-child { font-weight: 700; color: var(--navy); width: 80px; }
+  .drop-zone {
+    min-height: 44px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+  .drop-zone.drag-over { background: #dbeafe; border: 2px dashed var(--drag-border); border-radius: 4px; }
+  .drop-zone-placeholder {
+    color: #aaa;
+    font-size: 0.8rem;
+    font-style: italic;
+    padding: 4px;
+    pointer-events: none;
+  }
+
+  /* Dropdown selects in Q4 */
+  .dropdown-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 6px;
+  }
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .dropdown-item label { font-size: 0.92rem; font-weight: 600; min-width: 140px; }
+  .answer-select {
+    flex: 1;
+    min-width: 220px;
+    padding: 9px 12px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--navy);
+    background: white;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .answer-select:focus { border-color: var(--navy); }
+
+  /* Navigation */
+  .nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 2px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+  }
+  .nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .nav-info {
+    font-size: 0.8rem;
+    color: var(--slate);
+  }
+  .nav-info strong { color: var(--navy); }
+  .btn-nav {
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s;
+    border: 2px solid transparent;
+  }
+  .btn-prev { background: white; border-color: var(--border); color: var(--navy); }
+  .btn-prev:hover { border-color: var(--navy); }
+  .btn-next { background: var(--navy); color: white; }
+  .btn-next:hover { background: #1a3a5c; }
+  .btn-submit { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .btn-submit:hover { background: var(--gold-light); }
+
+  .question-nav-dots {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .q-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: background 0.2s;
+    border: none;
+    padding: 0;
+  }
+  .q-dot.answered { background: var(--navy); }
+  .q-dot.current { background: var(--gold); }
+  .q-dot.vocab-flagged { outline: 2px solid var(--vocab-amber); outline-offset: 2px; }
+
+  /* ── RESULTS SCREEN ── */
+  #screen-results {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 36px 20px 60px;
+  }
+  .results-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .results-eyebrow {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .results-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.8rem;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .results-student {
+    font-size: 1rem;
+    color: var(--slate);
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 560px) { .results-grid { grid-template-columns: 1fr; } }
+
+  .result-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 20px 24px;
+    text-align: center;
+  }
+  .result-card.wide { grid-column: 1 / -1; text-align: left; }
+  .result-card-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--slate);
+    margin-bottom: 8px;
+  }
+  .result-score {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .result-score-sub { font-size: 0.9rem; color: var(--slate); margin-top: 4px; }
+  .achievement-badge {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+  .level-beginning { background: #fee2e2; color: #991b1b; }
+  .level-developing { background: #fef3c7; color: #92400e; }
+  .level-proficient { background: #dcfce7; color: #166534; }
+  .level-distinguished { background: #dbeafe; color: #1e40af; }
+
+  .domain-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .domain-name { font-size: 0.85rem; font-weight: 600; min-width: 180px; color: var(--navy); }
+  .domain-bar-outer { flex: 1; height: 8px; background: var(--border); border-radius: 4px; }
+  .domain-bar-inner { height: 100%; border-radius: 4px; background: var(--navy); transition: width 0.6s ease; }
+  .domain-pct { font-size: 0.82rem; font-weight: 700; color: var(--navy); min-width: 38px; text-align: right; }
+
+  .vocab-result-section { margin-top: 8px; }
+  .vocab-result-section p { font-size: 0.88rem; color: var(--slate); line-height: 1.6; }
+  .vocab-item-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .vocab-tag {
+    background: var(--vocab-amber-light);
+    border: 1px solid var(--vocab-amber);
+    color: #92400e;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .submit-status {
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 16px 24px;
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--slate);
+    margin-top: 16px;
+  }
+  .submit-status.success { border-left: 4px solid var(--green); }
+  .submit-status.error { border-left: 4px solid var(--red); }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .cover-banner, .cover-form { padding: 24px 20px; }
+    .question-body { padding: 18px 16px; }
+    .diagram-row { gap: 10px; }
+    .sim-header-inner { padding: 10px 14px; }
+    .progress-bar-outer { width: 80px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="sim-header" id="main-header" style="display:none">
+  <div class="sim-header-inner">
+    <div>
+      <div class="sim-header-sub">Georgia Milestones Practice</div>
+      <div class="sim-header-title">Matter &amp; Particle Models</div>
+    </div>
+    <div class="header-right">
+      <div class="progress-wrap">
+        <div class="progress-label">Progress</div>
+        <div class="progress-bar-outer">
+          <div class="progress-bar-inner" id="progress-bar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 1: COVER / REGISTRATION
+══════════════════════════════════════════════ -->
+<div id="screen-cover" class="screen active">
+  <div id="screen-cover-inner">
+    <div style="max-width:600px;margin:60px auto;padding:0 20px;">
+      <div class="cover-card">
+        <div class="cover-banner">
+          <div class="cover-eyebrow">Georgia Milestones Practice Simulation</div>
+          <div class="cover-title">Matter &amp; Particle Models</div>
+          <div class="cover-subtitle">Physical Science · Grades 8</div>
+          <div class="cover-meta">
+            <div class="cover-meta-item"><strong>8</strong> Questions</div>
+            <div class="cover-meta-item"><strong>DOK 1–3</strong> Rigor</div>
+            <div class="cover-meta-item"><strong>SR · MS · DD</strong> Types</div>
+          </div>
+        </div>
+        <div class="cover-form">
+          <div class="directions-box">
+            <strong>Directions:</strong> This simulation contains selected-response, multi-select, and drag-and-drop questions. Read each question carefully. You may flag items where <strong>vocabulary</strong> was a barrier using the 🏳 button. Do <em>not</em> use any notes or resources. When finished, your results will be submitted automatically.
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="student-name">Student Name</label>
+            <input class="form-input" type="text" id="student-name" placeholder="First Last">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="student-period">Class Period</label>
+            <select class="form-select" id="student-period">
+              <option value="">-- Select Period --</option>
+              <option value="1">Period 1</option>
+              <option value="2">Period 2</option>
+              <option value="3">Period 3</option>
+              <option value="4">Period 4</option>
+              <option value="5">Period 5</option>
+              <option value="6">Period 6</option>
+              <option value="7">Period 7</option>
+            </select>
+          </div>
+          <button class="btn-start" onclick="startSimulation()">Begin Simulation →</button>
+          <div id="cover-error" style="color:#b0321e;font-size:0.85rem;margin-top:10px;display:none;">Please enter your name and select a period before continuing.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 2: QUESTIONS
+══════════════════════════════════════════════ -->
+<div id="screen-question" class="screen">
+  <div id="question-container"></div>
+
+  <!-- Navigation dots -->
+  <div style="text-align:center;margin:16px 0 70px;">
+    <div class="question-nav-dots" id="nav-dots" style="justify-content:center;"></div>
+  </div>
+
+  <!-- Bottom nav bar -->
+  <div class="nav-bar">
+    <div class="nav-inner">
+      <button class="btn-nav btn-prev" id="btn-prev" onclick="navigate(-1)">← Back</button>
+      <div class="nav-info">
+        Question <strong id="q-current">1</strong> of <strong id="q-total">8</strong>
+      </div>
+      <button class="btn-nav btn-next" id="btn-next" onclick="navigate(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SCREEN 3: RESULTS
+══════════════════════════════════════════════ -->
+<div id="screen-results" class="screen">
+  <div class="results-header">
+    <div class="results-eyebrow">Simulation Complete</div>
+    <div class="results-title">Your Results</div>
+    <div class="results-student" id="results-student-label"></div>
+  </div>
+
+  <div class="results-grid">
+    <div class="result-card">
+      <div class="result-card-label">Overall Score</div>
+      <div class="result-score" id="res-score">—</div>
+      <div class="result-score-sub" id="res-fraction">— / — correct</div>
+    </div>
+    <div class="result-card">
+      <div class="result-card-label">Achievement Level</div>
+      <div style="margin-top:8px;">
+        <span class="achievement-badge" id="res-level">—</span>
+      </div>
+      <div class="result-score-sub" style="margin-top:10px;" id="res-level-range"></div>
+    </div>
+    <div class="result-card wide">
+      <div class="result-card-label" style="margin-bottom:14px;">Domain Performance</div>
+      <div id="res-domains"></div>
+    </div>
+    <div class="result-card wide vocab-result-section">
+      <div class="result-card-label">Vocabulary Flags</div>
+      <div id="res-vocab"></div>
+    </div>
+  </div>
+
+  <div class="submit-status" id="submit-status">Submitting results…</div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════
+// APPS SCRIPT ENDPOINT — replace after deployment
+// ════════════════════════════════════════════════
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyISrJwQuFV8tQWPFj4cfhQMlzhWvCjM7nBsuJG1cqLeW36MGgnR2LfgazHFOLuAK0R/exec";
+
+// ════════════════════════════════════════════════
+// QUESTION DATA
+// ════════════════════════════════════════════════
+const QUESTIONS = [
+  // ─── Q1 │ DOK 1 │ Selected Response ───────────────────────────────────
+  {
+    id: 1,
+    dok: 1,
+    type: "selected-response",
+    domain: "particleModels",
+    domainLabel: "Particle Models",
+    stem: "Which model shows the structure and movement of particles in a <strong>solid</strong>?",
+    stimulus: `
+      <p>Look at the illustrations below. Each model represents particles of matter in a different arrangement.</p>
+      <div class="diagram-row">
+        <div class="diagram-item">
+          <div class="diagram-container">${svgModel1()}</div>
+          <div class="diagram-label">model 1</div>
+        </div>
+        <div class="diagram-item">
+          <div class="diagram-container">${svgModel2()}</div>
+          <div class="diagram-label">model 2</div>
+        </div>
+        <div class="diagram-item">
+          <div class="diagram-container">${svgModel3()}</div>
+          <div class="diagram-label">model 3</div>
+        </div>
+        <div class="diagram-item">
+          <div class="diagram-container">${svgModel4()}</div>
+          <div class="diagram-label">model 4</div>
+        </div>
+      </div>
+    `,
+    options: [
+      { letter: "A", text: "Model 1" },
+      { letter: "B", text: "Model 2" },
+      { letter: "C", text: "Model 3" },
+      { letter: "D", text: "Model 4" }
+    ],
+    correctIndex: 1, // Model 2 — tightly packed, no motion arrows
+    vocabFlagged: false,
+    userAnswer: null
+  },
+
+  // ─── Q2 │ DOK 2 │ Selected Response ───────────────────────────────────
+  {
+    id: 2,
+    dok: 2,
+    type: "selected-response",
+    domain: "statesOfMatter",
+    domainLabel: "States of Matter",
+    stem: "Dry ice is solid carbon dioxide. As dry ice is heated, it goes directly from a solid to a gas through a process called sublimation. Which sequence of jars shows the change in the motion of particles of dry ice as it sublimes?",
+    stimulus: `
+      <div class="diagram-row">
+        <div class="diagram-item">
+          <div class="diagram-container">${svgJarSolid()}</div>
+          <div class="diagram-label">Jar P (solid)</div>
+        </div>
+        <div class="diagram-item">
+          <div class="diagram-container">${svgJarLiquid()}</div>
+          <div class="diagram-label">Jar Q (liquid)</div>
+        </div>
+        <div class="diagram-item">
+          <div class="diagram-container">${svgJarGas()}</div>
+          <div class="diagram-label">Jar R (gas)</div>
+        </div>
+      </div>
+      <p>The three jars show the movement of particles in three states of matter.</p>
+    `,
+    options: [
+      { letter: "A", text: "jar P to jar Q" },
+      { letter: "B", text: "jar P to jar R" },
+      { letter: "C", text: "jar Q to jar R" },
+      { letter: "D", text: "jar R to jar P" }
+    ],
+    correctIndex: 1, // P → R skips liquid
+    vocabFlagged: false,
+    userAnswer: null
+  },
+
+  // ─── Q3 │ DOK 2 │ Selected Response ───────────────────────────────────
+  {
+    id: 3,
+    dok: 2,
+    type: "selected-response",
+    domain: "particleModels",
+    domainLabel: "Particle Models",
+    stem: "A student is shown a simple model of particles that make up a liquid. <strong>Part A:</strong> How should the model be changed to show the particles of a <strong>solid</strong>?",
+    stimulus: `
+      <p>The model below shows particles in a liquid state — moderate spacing, slight vibrations.</p>
+      <div style="display:flex;justify-content:center;margin:12px 0;">
+        <div class="diagram-container">${svgLiquidModel()}</div>
+      </div>
+    `,
+    options: [
+      { letter: "A", text: "Increase the velocities of the particles, and increase the space between the particles." },
+      { letter: "B", text: "Increase the velocities of the particles, and decrease the space between the particles." },
+      { letter: "C", text: "Decrease the velocities of the particles, and increase the space between the particles." },
+      { letter: "D", text: "Decrease the velocities of the particles, and decrease the space between the particles." }
+    ],
+    correctIndex: 3, // Solid = less motion + less space
+    vocabFlagged: false,
+    userAnswer: null
+  },
+
+  // ─── Q4 │ DOK 2 │ Selected Response ───────────────────────────────────
+  {
+    id: 4,
+    dok: 2,
+    type: "selected-response",
+    domain: "particleModels",
+    domainLabel: "Particle Models",
+    stem: "Using the same liquid model, <strong>Part B:</strong> How should the model be changed to show the particles of a liquid at a <strong>higher temperature</strong>?",
+    stimulus: `
+      <p>Refer to the same liquid particle model from the previous question.</p>
+    `,
+    options: [
+      { letter: "A", text: "Separate the particles into positive and negative charges, and increase the space between the particles." },
+      { letter: "B", text: "Separate the particles into positive and negative charges, but maintain the same space between the particles." },
+      { letter: "C", text: "Decrease the velocities of the particles, and decrease the space between the particles." },
+      { letter: "D", text: "Increase the velocities of the particles, but maintain the same space between the particles." }
+    ],
+    correctIndex: 3, // Higher temp = faster particles, still liquid (same spacing)
+    vocabFlagged: false,
+    userAnswer: null
+  },
+
+  // ─── Q5 │ DOK 2 │ Drag & Drop ─────────────────────────────────────────
+  {
+    id: 5,
+    dok: 2,
+    type: "drag-drop",
+    domain: "classificationOfMatter",
+    domainLabel: "Classification of Matter",
+    stem: "Iron can be found as a gray powder, and sulfur can be found as a yellow powder. The diagram shows atomic models of the arrangement of iron (Fe) atoms and sulfur atoms (S). Move the correct classifications and appearance descriptions into the table.",
+    stimulus: `
+      <div class="diagram-row">
+        <div class="diagram-item">
+          <div class="diagram-container">${svgIronSulfurMixed()}</div>
+          <div class="diagram-label">Model 1</div>
+        </div>
+        <div class="diagram-item">
+          <div class="diagram-container">${svgIronSulfurBonded()}</div>
+          <div class="diagram-label">Model 2</div>
+        </div>
+      </div>
+      <p style="margin-top:8px;font-size:0.83rem;color:var(--slate);">Key: ⊙ = sulfur atom (S) &nbsp;|&nbsp; ⊕ = iron atom (Fe)</p>
+    `,
+    banks: {
+      classification: ["pure substance", "homogeneous mixture", "heterogeneous mixture"],
+      appearance: ["gray and yellow particles visible", "uniform color"]
+    },
+    dropZones: [
+      { id: "dz-5-1-class", rowLabel: "Model 1", column: "Classification", bankKey: "classification" },
+      { id: "dz-5-1-app",   rowLabel: "Model 1", column: "Appearance",     bankKey: "appearance" },
+      { id: "dz-5-2-class", rowLabel: "Model 2", column: "Classification", bankKey: "classification" },
+      { id: "dz-5-2-app",   rowLabel: "Model 2", column: "Appearance",     bankKey: "appearance" }
+    ],
+    // Model 1 = heterogeneous mixture (Fe + S separate, gray+yellow visible)
+    // Model 2 = pure substance (compound FeS, uniform appearance)
+    correctAnswers: {
+      "dz-5-1-class": "heterogeneous mixture",
+      "dz-5-1-app": "gray and yellow particles visible",
+      "dz-5-2-class": "pure substance",
+      "dz-5-2-app": "uniform color"
+    },
+    userAnswers: {},
+    vocabFlagged: false
+  },
+
+  // ─── Q6 │ DOK 2 │ Drag & Drop ─────────────────────────────────────────
+  {
+    id: 6,
+    dok: 2,
+    type: "drag-drop",
+    domain: "propertiesAndSeparation",
+    domainLabel: "Properties & Separation",
+    stem: "A student draws four models to represent the different types of matter. Move the descriptions into the table to correctly identify each model. Descriptions may be used more than once.",
+    stimulus: `
+      <p style="font-size:0.85rem;color:var(--slate);margin-bottom:6px;">Key: ○ = type X particle &nbsp;|&nbsp; ● = type Y particle</p>
+      <div class="diagram-row">
+        <div class="diagram-item">
+          <div class="diagram-container">${svgMatterModel('A')}</div>
+          <div class="diagram-label">Model A</div>
+        </div>
+        <div class="diagram-item">
+          <div class="diagram-container">${svgMatterModel('B')}</div>
+          <div class="diagram-label">Model B</div>
+        </div>
+        <div class="diagram-item">
+          <div class="diagram-container">${svgMatterModel('C')}</div>
+          <div class="diagram-label">Model C</div>
+        </div>
+        <div class="diagram-item">
+          <div class="diagram-container">${svgMatterModel('D')}</div>
+          <div class="diagram-label">Model D</div>
+        </div>
+      </div>
+    `,
+    banks: {
+      descriptions: ["pure substance", "mixture", "could be separated physically", "could be separated chemically", "cannot be separated"]
+    },
+    dropZones: [
+      { id: "dz-6-A-1", rowLabel: "Model A", column: "Description 1", bankKey: "descriptions" },
+      { id: "dz-6-A-2", rowLabel: "Model A", column: "Description 2", bankKey: "descriptions" },
+      { id: "dz-6-B-1", rowLabel: "Model B", column: "Description 1", bankKey: "descriptions" },
+      { id: "dz-6-B-2", rowLabel: "Model B", column: "Description 2", bankKey: "descriptions" },
+      { id: "dz-6-C-1", rowLabel: "Model C", column: "Description 1", bankKey: "descriptions" },
+      { id: "dz-6-C-2", rowLabel: "Model C", column: "Description 2", bankKey: "descriptions" },
+      { id: "dz-6-D-1", rowLabel: "Model D", column: "Description 1", bankKey: "descriptions" },
+      { id: "dz-6-D-2", rowLabel: "Model D", column: "Description 2", bankKey: "descriptions" }
+    ],
+    // Model A (mixed X+Y free): mixture, could be separated physically
+    // Model B (only X tightly packed): pure substance, cannot be separated
+    // Model C (X+Y bonded pairs): pure substance, could be separated chemically
+    // Model D (only X+X bonded): mixture, could be separated physically
+    correctAnswers: {
+      "dz-6-A-1": "mixture",           "dz-6-A-2": "could be separated physically",
+      "dz-6-B-1": "pure substance",    "dz-6-B-2": "cannot be separated",
+      "dz-6-C-1": "pure substance",    "dz-6-C-2": "could be separated chemically",
+      "dz-6-D-1": "mixture",           "dz-6-D-2": "could be separated physically"
+    },
+    userAnswers: {},
+    vocabFlagged: false
+  },
+
+  // ─── Q7 │ DOK 2 │ Drop-down selects ──────────────────────────────────
+  {
+    id: 7,
+    dok: 2,
+    type: "dropdown",
+    domain: "classificationOfMatter",
+    domainLabel: "Classification of Matter",
+    stem: "A student developed a model of three different samples as shown. Use the drop-down menus to describe each sample in the model.",
+    stimulus: `
+      <div class="diagram-row">
+        <div class="diagram-item">
+          <div class="diagram-container">${svgSample(1)}</div>
+          <div class="diagram-label">Sample 1</div>
+        </div>
+        <div class="diagram-item">
+          <div class="diagram-container">${svgSample(2)}</div>
+          <div class="diagram-label">Sample 2</div>
+        </div>
+        <div class="diagram-item">
+          <div class="diagram-container">${svgSample(3)}</div>
+          <div class="diagram-label">Sample 3</div>
+        </div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--slate);margin-top:4px;">Key: △ = type W particle &nbsp;|&nbsp; ○ = type X particle &nbsp;|&nbsp; ◑ = type Z particle (bonded pair)</p>
+    `,
+    dropdowns: [
+      {
+        label: "Sample 1 represents",
+        id: "dd-7-s1",
+        options: ["an element", "a compound", "a mixture of elements", "a mixture of compounds", "a mixture of a compound and an element"],
+        correct: "an element"
+      },
+      {
+        label: "Sample 2 represents",
+        id: "dd-7-s2",
+        options: ["an element", "a compound", "a mixture of elements", "a mixture of compounds", "a mixture of a compound and an element"],
+        correct: "a mixture of elements"
+      },
+      {
+        label: "Sample 3 represents",
+        id: "dd-7-s3",
+        options: ["an element", "a compound", "a mixture of elements", "a mixture of compounds", "a mixture of a compound and an element"],
+        correct: "a mixture of a compound and an element"
+      }
+    ],
+    vocabFlagged: false,
+    userAnswers: {}
+  },
+
+  // ─── Q8 │ DOK 3 │ Multi-select ────────────────────────────────────────
+  {
+    id: 8,
+    dok: 3,
+    type: "multi-select",
+    domain: "classificationOfMatter",
+    domainLabel: "Classification of Matter",
+    stem: "A sample of matter has the following properties: it contains only one type of atom, the particles cannot be broken down further by chemical means, and all particles are identical. Select <strong>ALL</strong> statements that correctly describe this sample.",
+    options: [
+      { letter: "A", text: "It is a pure substance." },
+      { letter: "B", text: "It is a mixture that can be separated physically." },
+      { letter: "C", text: "It is an element." },
+      { letter: "D", text: "It is a compound because it has a fixed composition." },
+      { letter: "E", text: "It cannot be broken down into simpler substances by chemical means." }
+    ],
+    correctIndices: [0, 2, 4], // A, C, E
+    vocabFlagged: false,
+    userAnswer: []
+  }
+];
+
+// ════════════════════════════════════════════════
+// SVG HELPERS
+// ════════════════════════════════════════════════
+function svgModel1() {
+  // Plasma-like: charged particles, spread out with + / - symbols
+  return `<svg width="120" height="100" viewBox="0 0 120 100">
+    <rect width="120" height="100" fill="#f9f9f9"/>
+    ${[
+      [18,20],[55,15],[90,22],[30,45],[70,40],[100,48],[15,70],[50,72],[85,68],[38,88]
+    ].map(([x,y],i) => `
+      <circle cx="${x}" cy="${y}" r="9" fill="#d0d0d0" stroke="#888" stroke-width="1.2"/>
+      <text x="${x}" y="${y+4}" font-size="8" text-anchor="middle" fill="#555">${i%2===0?'+':'−'}</text>
+      <line x1="${x+6}" y1="${y-6}" x2="${x+12}" y2="${y-12}" stroke="#aaa" stroke-width="1" marker-end="url(#arr)"/>
+    `).join('')}
+    <defs><marker id="arr" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4 Z" fill="#aaa"/></marker></defs>
+  </svg>`;
+}
+function svgModel2() {
+  // Solid: tight grid, no arrows
+  let circles = '';
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 5; col++) {
+      circles += `<circle cx="${14+col*22}" cy="${14+row*22}" r="9" fill="#bbb" stroke="#888" stroke-width="1.5"/>`;
+    }
+  }
+  return `<svg width="120" height="100" viewBox="0 0 120 100"><rect width="120" height="100" fill="#f9f9f9"/>${circles}</svg>`;
+}
+function svgModel3() {
+  // Liquid: moderate spacing, slight vibration marks
+  return `<svg width="120" height="100" viewBox="0 0 120 100">
+    <rect width="120" height="100" fill="#f9f9f9"/>
+    ${[
+      [18,18],[48,12],[80,20],[100,15],
+      [10,45],[36,42],[65,48],[95,40],
+      [22,72],[52,68],[78,75],[105,70]
+    ].map(([x,y]) => `
+      <circle cx="${x}" cy="${y}" r="9" fill="#bbb" stroke="#888" stroke-width="1.2"/>
+      <path d="M${x-9},${y} q4,-4 8,0 q4,4 8,0" fill="none" stroke="#aaa" stroke-width="1.2"/>
+    `).join('')}
+  </svg>`;
+}
+function svgModel4() {
+  // Gas: very sparse, fast arrows
+  return `<svg width="120" height="100" viewBox="0 0 120 100">
+    <rect width="120" height="100" fill="#f9f9f9"/>
+    <defs><marker id="arrowG" markerWidth="5" markerHeight="5" refX="3" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#666"/></marker></defs>
+    ${[
+      [22,20,30,10],[70,25,80,12],[100,40,115,32],[15,60,8,50],[50,70,38,62],[88,65,100,55],[30,88,20,78],[75,90,88,82]
+    ].map(([x,y,tx,ty]) => `
+      <circle cx="${x}" cy="${y}" r="9" fill="#bbb" stroke="#888" stroke-width="1.2"/>
+      <line x1="${x}" y1="${y}" x2="${tx}" y2="${ty}" stroke="#666" stroke-width="1.5" marker-end="url(#arrowG)"/>
+    `).join('')}
+  </svg>`;
+}
+
+function svgJarSolid() {
+  let circles = '';
+  for(let r=0;r<4;r++) for(let c=0;c<4;c++) circles+=`<circle cx="${20+c*18}" cy="${20+r*18}" r="7" fill="#bbb" stroke="#888" stroke-width="1.2"/>`;
+  return `<svg width="90" height="110" viewBox="0 0 90 110">
+    <rect x="5" y="5" width="80" height="100" rx="6" fill="none" stroke="#aaa" stroke-width="2"/>
+    <rect x="15" y="2" width="60" height="8" rx="3" fill="#ddd" stroke="#aaa" stroke-width="1.5"/>
+    ${circles}
+  </svg>`;
+}
+function svgJarLiquid() {
+  let circles = '';
+  const pos = [[14,22],[38,16],[62,24],[80,18],[10,46],[34,50],[58,44],[78,50],[20,72],[46,68],[70,74]];
+  pos.forEach(([x,y]) => { circles+=`<circle cx="${x}" cy="${y}" r="7" fill="#bbb" stroke="#888" stroke-width="1.2"/><path d="M${x-7},${y} q3.5,-3.5 7,0 q3.5,3.5 7,0" fill="none" stroke="#aaa" stroke-width="1.2"/>` });
+  return `<svg width="90" height="110" viewBox="0 0 90 110">
+    <rect x="5" y="5" width="80" height="100" rx="6" fill="none" stroke="#aaa" stroke-width="2"/>
+    <rect x="15" y="2" width="60" height="8" rx="3" fill="#ddd" stroke="#aaa" stroke-width="1.5"/>
+    ${circles}
+  </svg>`;
+}
+function svgJarGas() {
+  const pos = [[14,22,24,10],[50,20,62,10],[78,30,90,20],[10,55,2,44],[44,60,34,50],[76,55,88,46],[22,88,14,77],[60,85,72,75]];
+  let circles = '';
+  pos.forEach(([x,y,tx,ty]) => { circles+=`<circle cx="${x}" cy="${y}" r="7" fill="#bbb" stroke="#888" stroke-width="1.2"/><line x1="${x}" y1="${y}" x2="${tx}" y2="${ty}" stroke="#666" stroke-width="1.5" marker-end="url(#jArr)"/>` });
+  return `<svg width="90" height="110" viewBox="0 0 90 110">
+    <defs><marker id="jArr" markerWidth="5" markerHeight="5" refX="3" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#666"/></marker></defs>
+    <rect x="5" y="5" width="80" height="100" rx="6" fill="none" stroke="#aaa" stroke-width="2"/>
+    <rect x="15" y="2" width="60" height="8" rx="3" fill="#ddd" stroke="#aaa" stroke-width="1.5"/>
+    ${circles}
+  </svg>`;
+}
+function svgLiquidModel() {
+  let circles = '';
+  const pos = [[18,18],[48,12],[78,20],[100,15],[10,45],[36,42],[65,48],[92,40],[22,72],[52,68],[78,75]];
+  pos.forEach(([x,y]) => { circles+=`<circle cx="${x}" cy="${y}" r="9" fill="#bbb" stroke="#888" stroke-width="1.2"/><path d="M${x-9},${y} q4,-4 8,0 q4,4 8,0" fill="none" stroke="#aaa" stroke-width="1.2"/>` });
+  return `<svg width="130" height="100" viewBox="0 0 120 95"><rect width="120" height="95" fill="#f9f9f9"/>${circles}</svg>`;
+}
+
+function svgIronSulfurMixed() {
+  // Random mix of Fe and S atoms
+  return `<svg width="130" height="120" viewBox="0 0 130 120">
+    <rect width="130" height="120" fill="#f9f9f9" stroke="#ccc" stroke-width="1"/>
+    ${[[15,15,'S'],[45,12,'Fe'],[80,20,'S'],[110,14,'Fe'],[20,45,'Fe'],[55,40,'S'],[90,48,'S'],[115,42,'Fe'],[10,75,'S'],[42,72,'Fe'],[72,80,'S'],[105,75,'Fe'],[25,100,'Fe'],[60,105,'S'],[95,100,'Fe']].map(([x,y,label]) =>
+      `<circle cx="${x}" cy="${y}" r="11" fill="${label==='S'?'#e8e060':'#a0a0a0'}" stroke="#666" stroke-width="1.2"/>
+       <text x="${x}" y="${y+4}" font-size="7" text-anchor="middle" fill="#333" font-weight="bold">${label}</text>`
+    ).join('')}
+  </svg>`;
+}
+function svgIronSulfurBonded() {
+  // Bonded Fe-S pairs in close proximity (compound)
+  return `<svg width="130" height="120" viewBox="0 0 130 120">
+    <rect width="130" height="120" fill="#f9f9f9" stroke="#ccc" stroke-width="1"/>
+    ${[[10,18,'Fe'],[30,18,'S'],[55,14,'Fe'],[75,14,'S'],[100,20,'Fe'],[8,50,'S'],[28,50,'Fe'],[53,46,'S'],[73,46,'Fe'],[98,50,'S'],[10,80,'Fe'],[30,80,'S'],[55,76,'Fe'],[75,76,'S'],[100,82,'Fe'],[8,108,'S'],[28,108,'Fe'],[53,104,'S'],[73,104,'Fe'],[98,106,'S']].map(([x,y,label]) =>
+      `<circle cx="${x}" cy="${y}" r="10" fill="${label==='S'?'#e8e060':'#a0a0a0'}" stroke="#666" stroke-width="1.2"/>
+       <text x="${x}" y="${y+4}" font-size="7" text-anchor="middle" fill="#333" font-weight="bold">${label}</text>`
+    ).join('')}
+  </svg>`;
+}
+
+function svgMatterModel(id) {
+  // A = mixture X+Y free; B = pure element X tightly packed; C = compound XY bonded; D = mixture of compound XY+X
+  const W = 100, H = 90;
+  let content = `<rect width="${W}" height="${H}" fill="#f9f9f9"/>`;
+  if (id === 'A') {
+    // mixed X and Y, unorganized
+    [[12,12,'X'],[40,8,'Y'],[70,15,'X'],[88,8,'Y'],[8,38,'Y'],[32,40,'X'],[60,35,'X'],[85,42,'Y'],[15,65,'X'],[45,68,'Y'],[72,62,'X'],[88,70,'Y']].forEach(([x,y,t]) => {
+      content += t==='X'
+        ? `<circle cx="${x}" cy="${y}" r="8" fill="none" stroke="#888" stroke-width="1.8"/>`
+        : `<circle cx="${x}" cy="${y}" r="8" fill="#888"/>`;
+    });
+  } else if (id === 'B') {
+    // pure element X only, tightly packed
+    for(let r=0;r<3;r++) for(let c=0;c<4;c++)
+      content += `<circle cx="${14+c*23}" cy="${18+r*24}" r="9" fill="none" stroke="#888" stroke-width="1.8"/>`;
+  } else if (id === 'C') {
+    // compound: XY bonded pairs (bicolor pairs)
+    [[10,14,'X'],[27,14,'Y'],[52,10,'X'],[69,10,'Y'],[86,18,'X'],[8,42,'Y'],[25,42,'X'],[50,38,'Y'],[67,38,'X'],[84,44,'Y'],[10,68,'X'],[27,68,'Y'],[52,64,'X'],[69,64,'Y']].forEach(([x,y,t]) => {
+      content += t==='X'
+        ? `<circle cx="${x}" cy="${y}" r="8" fill="none" stroke="#888" stroke-width="1.8"/>`
+        : `<circle cx="${x}" cy="${y}" r="8" fill="#888"/>`;
+    });
+  } else {
+    // D = mixture of compound XY pairs and X element
+    [[12,12,'P'],[42,10,'P'],[72,16,'P'],[8,40,'X'],[56,38,'P'],[82,42,'X'],[15,68,'P'],[50,65,'X'],[78,70,'P']].forEach(([x,y,t]) => {
+      if (t==='P') {
+        content += `<circle cx="${x}" cy="${y}" r="8" fill="none" stroke="#888" stroke-width="1.8"/>
+                    <circle cx="${x+18}" cy="${y}" r="8" fill="#888"/>`;
+      } else {
+        content += `<circle cx="${x}" cy="${y}" r="8" fill="none" stroke="#888" stroke-width="1.8"/>`;
+      }
+    });
+  }
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${content}</svg>`;
+}
+
+function svgSample(n) {
+  const W=110, H=90;
+  let content = `<rect width="${W}" height="${H}" fill="#f9f9f9"/>`;
+  if (n===1) {
+    // Sample 1: all W (triangles) — element
+    [[10,10],[40,8],[70,12],[88,8],[8,38],[34,40],[62,36],[88,40],[14,65],[42,68],[68,64],[90,68]].forEach(([x,y]) => {
+      content += `<polygon points="${x+7},${y} ${x},${y+14} ${x+14},${y+14}" fill="#888" stroke="#555" stroke-width="1"/>`;
+    });
+  } else if (n===2) {
+    // Sample 2: mix of W and X — mixture of elements
+    [[10,12,'W'],[38,10,'X'],[66,16,'W'],[90,10,'X'],[8,40,'X'],[34,44,'W'],[60,38,'X'],[88,44,'W'],[14,68,'W'],[42,70,'X'],[68,66,'W'],[90,70,'X']].forEach(([x,y,t]) => {
+      if (t==='W') content += `<polygon points="${x+7},${y} ${x},${y+14} ${x+14},${y+14}" fill="#888" stroke="#555" stroke-width="1"/>`;
+      else content += `<circle cx="${x+7}" cy="${y+7}" r="7" fill="none" stroke="#888" stroke-width="1.8"/>`;
+    });
+  } else {
+    // Sample 3: Z bonded pairs (compound) + X element — mixture of compound and element
+    [[10,10,'Z'],[55,8,'X'],[8,44,'X'],[50,40,'Z'],[85,42,'X'],[18,72,'Z'],[64,70,'X']].forEach(([x,y,t]) => {
+      if (t==='Z') {
+        content += `<circle cx="${x+5}" cy="${y+7}" r="7" fill="none" stroke="#888" stroke-width="1.8"/>
+                    <circle cx="${x+19}" cy="${y+7}" r="7" fill="#888"/>`;
+      } else {
+        content += `<circle cx="${x+7}" cy="${y+7}" r="7" fill="none" stroke="#888" stroke-width="1.8"/>`;
+      }
+    });
+  }
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${content}</svg>`;
+}
+
+// ════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════
+let currentQ = 0;
+let studentName = '';
+let studentPeriod = '';
+let dragChipData = null;
+
+// ════════════════════════════════════════════════
+// SIMULATION FLOW
+// ════════════════════════════════════════════════
+function startSimulation() {
+  studentName = document.getElementById('student-name').value.trim();
+  studentPeriod = document.getElementById('student-period').value;
+  if (!studentName || !studentPeriod) {
+    document.getElementById('cover-error').style.display = 'block';
+    return;
+  }
+  document.getElementById('cover-error').style.display = 'none';
+  document.getElementById('screen-cover').classList.remove('active');
+  document.getElementById('main-header').style.display = 'block';
+  document.getElementById('screen-question').classList.add('active');
+  buildNavDots();
+  renderQuestion(0);
+}
+
+function buildNavDots() {
+  const container = document.getElementById('nav-dots');
+  container.innerHTML = '';
+  QUESTIONS.forEach((q, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'q-dot';
+    dot.title = `Question ${i+1}`;
+    dot.onclick = () => { saveCurrentAnswer(); renderQuestion(i); };
+    container.appendChild(dot);
+  });
+  updateNavDots();
+}
+
+function updateNavDots() {
+  const dots = document.querySelectorAll('.q-dot');
+  dots.forEach((dot, i) => {
+    dot.className = 'q-dot';
+    const q = QUESTIONS[i];
+    const answered = isAnswered(q);
+    if (answered) dot.classList.add('answered');
+    if (i === currentQ) dot.classList.add('current');
+    if (q.vocabFlagged) dot.classList.add('vocab-flagged');
+  });
+}
+
+function isAnswered(q) {
+  if (q.type === 'selected-response') return q.userAnswer !== null;
+  if (q.type === 'multi-select') return q.userAnswer && q.userAnswer.length > 0;
+  if (q.type === 'drag-drop') return Object.keys(q.userAnswers).length > 0;
+  if (q.type === 'dropdown') return Object.keys(q.userAnswers).length > 0;
+  return false;
+}
+
+function renderQuestion(index) {
+  currentQ = index;
+  const q = QUESTIONS[index];
+  document.getElementById('q-current').textContent = index + 1;
+  document.getElementById('q-total').textContent = QUESTIONS.length;
+  const pct = ((index) / QUESTIONS.length) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  const btn_prev = document.getElementById('btn-prev');
+  const btn_next = document.getElementById('btn-next');
+  btn_prev.style.display = index === 0 ? 'none' : 'inline-block';
+
+  if (index === QUESTIONS.length - 1) {
+    btn_next.textContent = 'Submit →';
+    btn_next.className = 'btn-nav btn-submit';
+    btn_next.onclick = () => { saveCurrentAnswer(); submitSimulation(); };
+  } else {
+    btn_next.textContent = 'Next →';
+    btn_next.className = 'btn-nav btn-next';
+    btn_next.onclick = () => navigate(1);
+  }
+
+  const html = buildQuestionHTML(q);
+  document.getElementById('question-container').innerHTML = html;
+  restoreAnswers(q);
+  initDragDrop(q);
+  updateNavDots();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildQuestionHTML(q) {
+  const dokClass = `badge-dok${q.dok}`;
+  const typeLabel = { 'selected-response': 'Selected Response', 'multi-select': 'Multi-Select', 'drag-drop': 'Drag & Drop', 'dropdown': 'Drop-Down' }[q.type];
+  const vocabActive = q.vocabFlagged ? ' flagged' : '';
+
+  let body = '';
+
+  if (q.type === 'selected-response') {
+    body = `<div class="question-stem">${q.stem}</div>
+    <ul class="options-list">
+    ${q.options.map((opt, i) => `
+      <li class="option-item${q.userAnswer===i?' selected':''}" onclick="selectOption(${q.id},${i})">
+        <div class="option-letter">${opt.letter}</div>
+        <div class="option-text">${opt.text}</div>
+      </li>
+    `).join('')}
+    </ul>`;
+  }
+
+  if (q.type === 'multi-select') {
+    body = `<div class="question-stem">${q.stem}</div>
+    <p class="multi-note">Select all that apply.</p>
+    <ul class="options-list">
+    ${q.options.map((opt, i) => {
+      const sel = q.userAnswer && q.userAnswer.includes(i) ? ' selected' : '';
+      return `<li class="option-item multi-option${sel}" onclick="toggleMulti(${q.id},${i})">
+        <div class="option-letter">${opt.letter}</div>
+        <div class="option-text">${opt.text}</div>
+      </li>`;
+    }).join('')}
+    </ul>`;
+  }
+
+  if (q.type === 'drag-drop') {
+    // Build bank(s)
+    let bankHTML = '';
+    Object.entries(q.banks).forEach(([bKey, chips]) => {
+      bankHTML += `<div class="drag-bank-label">${bKey.replace(/([A-Z])/g,' $1').replace(/^./,s=>s.toUpperCase())} Options</div>
+      <div class="drag-bank" id="bank-${q.id}-${bKey}" data-bank="${bKey}" data-qid="${q.id}">
+        ${chips.map(chip => `<div class="drag-chip" draggable="true" data-chip="${chip}" data-bankkey="${bKey}" data-qid="${q.id}">${chip}</div>`).join('')}
+      </div>`;
+    });
+
+    // Build table
+    const rows = {};
+    q.dropZones.forEach(dz => {
+      if (!rows[dz.rowLabel]) rows[dz.rowLabel] = [];
+      rows[dz.rowLabel].push(dz);
+    });
+    const colHeaders = [...new Set(q.dropZones.map(dz => dz.column))];
+    let tableHTML = `<table class="drop-table"><thead><tr><th>Model</th>${colHeaders.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`;
+    Object.entries(rows).forEach(([rowLabel, zones]) => {
+      tableHTML += `<tr><td>${rowLabel}</td>`;
+      colHeaders.forEach(col => {
+        const dz = zones.find(z => z.column === col);
+        if (dz) {
+          const val = q.userAnswers[dz.id] || '';
+          tableHTML += `<td><div class="drop-zone" id="${dz.id}" data-dzid="${dz.id}" data-bankkey="${dz.bankKey}" data-qid="${q.id}">
+            ${val ? `<div class="drag-chip in-target" draggable="true" data-chip="${val}" data-bankkey="${dz.bankKey}" data-qid="${q.id}" data-from-zone="${dz.id}">${val}</div>` : '<span class="drop-zone-placeholder">Drop here</span>'}
+          </div></td>`;
+        }
+      });
+      tableHTML += `</tr>`;
+    });
+    tableHTML += `</tbody></table>`;
+
+    body = `<div class="question-stem">${q.stem}</div>
+    <div class="drag-area">
+      ${bankHTML}
+      <div>${tableHTML}</div>
+    </div>`;
+  }
+
+  if (q.type === 'dropdown') {
+    const rows = q.dropdowns.map(dd => `
+      <div class="dropdown-item">
+        <label>${dd.label}</label>
+        <select class="answer-select" id="${dd.id}" data-qid="${q.id}" data-ddid="${dd.id}" onchange="saveDropdownAnswer(${q.id},'${dd.id}',this.value)">
+          <option value="">-- Select --</option>
+          ${dd.options.map(opt => `<option value="${opt}"${q.userAnswers[dd.id]===opt?' selected':''}>${opt}</option>`).join('')}
+        </select>
+      </div>
+    `).join('');
+    body = `<div class="question-stem">${q.stem}</div><div class="dropdown-row">${rows}</div>`;
+  }
+
+  return `
+    <div class="question-card">
+      <div class="question-header">
+        <span class="q-number">Question ${q.id}</span>
+        <div class="q-badges">
+          <span class="badge ${dokClass}">DOK ${q.dok}</span>
+          <span class="badge badge-type">${typeLabel}</span>
+          <button class="vocab-btn${vocabActive}" onclick="toggleVocab(${q.id})" id="vocab-btn-${q.id}">
+            <span class="vocab-flag-icon">🏳</span> Vocab Flag
+          </button>
+        </div>
+      </div>
+      <div class="question-body">
+        <div class="stimulus">${q.stimulus}</div>
+        ${body}
+      </div>
+    </div>`;
+}
+
+function restoreAnswers(q) {
+  // Already baked in via buildQuestionHTML, but re-select for SR/MS
+  if (q.type === 'selected-response' && q.userAnswer !== null) {
+    const items = document.querySelectorAll('.option-item');
+    if (items[q.userAnswer]) items[q.userAnswer].classList.add('selected');
+  }
+}
+
+// ════════════════════════════════════════════════
+// ANSWER HANDLERS
+// ════════════════════════════════════════════════
+function selectOption(qid, idx) {
+  const q = QUESTIONS.find(x => x.id === qid);
+  q.userAnswer = idx;
+  document.querySelectorAll('.option-item').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+  });
+  updateNavDots();
+}
+
+function toggleMulti(qid, idx) {
+  const q = QUESTIONS.find(x => x.id === qid);
+  if (!q.userAnswer) q.userAnswer = [];
+  const pos = q.userAnswer.indexOf(idx);
+  if (pos === -1) q.userAnswer.push(idx);
+  else q.userAnswer.splice(pos, 1);
+  document.querySelectorAll('.multi-option').forEach((el, i) => {
+    el.classList.toggle('selected', q.userAnswer.includes(i));
+    if (el.classList.contains('selected')) el.querySelector('.option-letter').style.cssText='background:var(--navy);border-color:var(--navy);color:white';
+    else el.querySelector('.option-letter').style.cssText='';
+  });
+  updateNavDots();
+}
+
+function saveDropdownAnswer(qid, ddid, val) {
+  const q = QUESTIONS.find(x => x.id === qid);
+  q.userAnswers[ddid] = val;
+  updateNavDots();
+}
+
+function toggleVocab(qid) {
+  const q = QUESTIONS.find(x => x.id === qid);
+  q.vocabFlagged = !q.vocabFlagged;
+  const btn = document.getElementById(`vocab-btn-${qid}`);
+  btn.classList.toggle('flagged', q.vocabFlagged);
+  updateNavDots();
+}
+
+function saveCurrentAnswer() {
+  // Drag-drop and dropdown answers are saved on interaction; SR/MS saved in state
+}
+
+// ════════════════════════════════════════════════
+// DRAG & DROP ENGINE
+// ════════════════════════════════════════════════
+function initDragDrop(q) {
+  if (q.type !== 'drag-drop') return;
+  setTimeout(() => {
+    // Attach drag events to all chips
+    document.querySelectorAll('.drag-chip').forEach(chip => {
+      chip.addEventListener('dragstart', onDragStart);
+      chip.addEventListener('dragend', onDragEnd);
+    });
+    // Attach drop events to all zones
+    document.querySelectorAll('.drop-zone').forEach(zone => {
+      zone.addEventListener('dragover', onDragOver);
+      zone.addEventListener('dragleave', onDragLeave);
+      zone.addEventListener('drop', onDrop);
+    });
+    // Attach drop back to banks
+    document.querySelectorAll('.drag-bank').forEach(bank => {
+      bank.addEventListener('dragover', onDragOver);
+      bank.addEventListener('dragleave', onDragLeave);
+      bank.addEventListener('drop', onDropToBank);
+    });
+  }, 50);
+}
+
+function onDragStart(e) {
+  const chip = e.currentTarget;
+  dragChipData = {
+    chip: chip.dataset.chip,
+    bankKey: chip.dataset.bankkey,
+    qid: parseInt(chip.dataset.qid),
+    fromZone: chip.dataset.fromZone || null
+  };
+  chip.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function onDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+}
+function onDragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+}
+function onDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+function onDrop(e) {
+  e.preventDefault();
+  const zone = e.currentTarget;
+  zone.classList.remove('drag-over');
+  if (!dragChipData) return;
+  const q = QUESTIONS.find(x => x.id === dragChipData.qid);
+  const dzId = zone.dataset.dzid;
+
+  // If zone already has a chip, send it back to bank
+  if (q.userAnswers[dzId]) {
+    // return old chip to bank — just delete, bank re-renders
+    delete q.userAnswers[dzId];
+  }
+  // If chip came from another zone, clear that zone
+  if (dragChipData.fromZone && dragChipData.fromZone !== dzId) {
+    delete q.userAnswers[dragChipData.fromZone];
+  }
+  q.userAnswers[dzId] = dragChipData.chip;
+  dragChipData = null;
+  renderQuestion(currentQ);
+}
+function onDropToBank(e) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragChipData || !dragChipData.fromZone) return;
+  const q = QUESTIONS.find(x => x.id === dragChipData.qid);
+  delete q.userAnswers[dragChipData.fromZone];
+  dragChipData = null;
+  renderQuestion(currentQ);
+}
+
+// ════════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════════
+function navigate(dir) {
+  saveCurrentAnswer();
+  const next = currentQ + dir;
+  if (next >= 0 && next < QUESTIONS.length) renderQuestion(next);
+}
+
+// ════════════════════════════════════════════════
+// SCORING
+// ════════════════════════════════════════════════
+function scoreSimulation() {
+  let totalItems = QUESTIONS.length;
+  let correct = 0;
+  const domainScores = {};
+  const domainTotals = {};
+
+  QUESTIONS.forEach(q => {
+    if (!domainTotals[q.domain]) { domainTotals[q.domain] = 0; domainScores[q.domain] = 0; }
+    domainTotals[q.domain]++;
+    let isCorrect = false;
+
+    if (q.type === 'selected-response') {
+      isCorrect = q.userAnswer === q.correctIndex;
+    } else if (q.type === 'multi-select') {
+      const ua = [...(q.userAnswer||[])].sort().join(',');
+      const ca = [...q.correctIndices].sort().join(',');
+      isCorrect = ua === ca;
+    } else if (q.type === 'drag-drop') {
+      const allRight = Object.entries(q.correctAnswers).every(([dzid, correct]) => {
+        const ua = q.userAnswers[dzid] || '';
+        return ua.toLowerCase() === correct.toLowerCase();
+      });
+      isCorrect = allRight;
+    } else if (q.type === 'dropdown') {
+      isCorrect = q.dropdowns.every(dd => {
+        return (q.userAnswers[dd.id]||'').toLowerCase() === dd.correct.toLowerCase();
+      });
+    }
+
+    if (isCorrect) { correct++; domainScores[q.domain]++; }
+  });
+
+  const pct = Math.round((correct / totalItems) * 100);
+  const domains = {};
+  Object.keys(domainTotals).forEach(d => {
+    domains[d] = domainTotals[d] > 0 ? Math.round((domainScores[d]/domainTotals[d])*100) : 0;
+  });
+
+  let level = 'Beginning';
+  if (pct >= 90) level = 'Distinguished';
+  else if (pct >= 70) level = 'Proficient';
+  else if (pct >= 50) level = 'Developing';
+
+  return { pct, correct, totalItems, level, domains };
+}
+
+// ════════════════════════════════════════════════
+// SUBMISSION
+// ════════════════════════════════════════════════
+function submitSimulation() {
+  const score = scoreSimulation();
+  const vocabFlags = QUESTIONS.filter(q => q.vocabFlagged).map(q => `Q${q.id}`);
+
+  const payload = {
+    studentName,
+    period: studentPeriod,
+    overallScore: score.pct,
+    itemsCorrect: score.correct,
+    itemsTotal: score.totalItems,
+    achievementLevel: score.level,
+    domains: {
+      statesOfMatter: score.domains['statesOfMatter'] !== undefined ? score.domains['statesOfMatter'] + '%' : 'N/A',
+      particleModels: score.domains['particleModels'] !== undefined ? score.domains['particleModels'] + '%' : 'N/A',
+      classificationOfMatter: score.domains['classificationOfMatter'] !== undefined ? score.domains['classificationOfMatter'] + '%' : 'N/A',
+      propertiesAndSeparation: score.domains['propertiesAndSeparation'] !== undefined ? score.domains['propertiesAndSeparation'] + '%' : 'N/A'
+    },
+    vocabFlags
+  };
+
+  // Show results screen
+  showResults(score, vocabFlags);
+
+  // Submit to Apps Script
+  if (APPS_SCRIPT_URL !== "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE") {
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(() => {
+      document.getElementById('submit-status').textContent = '✓ Results submitted successfully to your teacher.';
+      document.getElementById('submit-status').className = 'submit-status success';
+    }).catch(() => {
+      document.getElementById('submit-status').textContent = '⚠ Could not submit results. Please notify your teacher.';
+      document.getElementById('submit-status').className = 'submit-status error';
+    });
+  } else {
+    document.getElementById('submit-status').textContent = '⚠ Apps Script URL not yet configured. Results captured locally only.';
+    document.getElementById('submit-status').className = 'submit-status error';
+  }
+}
+
+function showResults(score, vocabFlags) {
+  document.getElementById('screen-question').classList.remove('active');
+  document.getElementById('main-header').style.display = 'none';
+  document.getElementById('screen-results').classList.add('active');
+
+  document.getElementById('results-student-label').textContent = `${studentName} · Period ${studentPeriod}`;
+  document.getElementById('res-score').textContent = score.pct + '%';
+  document.getElementById('res-fraction').textContent = `${score.correct} of ${score.totalItems} correct`;
+
+  const levelEl = document.getElementById('res-level');
+  levelEl.textContent = score.level;
+  const levelMap = { 'Distinguished': 'level-distinguished', 'Proficient': 'level-proficient', 'Developing': 'level-developing', 'Beginning': 'level-beginning' };
+  levelEl.className = `achievement-badge ${levelMap[score.level]}`;
+
+  const levelRanges = { 'Distinguished': '90–100%', 'Proficient': '70–89%', 'Developing': '50–69%', 'Beginning': 'Below 50%' };
+  document.getElementById('res-level-range').textContent = `Score range: ${levelRanges[score.level]}`;
+
+  const domainLabels = {
+    statesOfMatter: 'States of Matter',
+    particleModels: 'Particle Models',
+    classificationOfMatter: 'Classification of Matter',
+    propertiesAndSeparation: 'Properties & Separation'
+  };
+  const domHtml = Object.entries(score.domains).map(([key, pct]) => `
+    <div class="domain-row">
+      <div class="domain-name">${domainLabels[key] || key}</div>
+      <div class="domain-bar-outer"><div class="domain-bar-inner" style="width:${pct}%"></div></div>
+      <div class="domain-pct">${pct}%</div>
+    </div>
+  `).join('');
+  document.getElementById('res-domains').innerHTML = domHtml;
+
+  const vocabEl = document.getElementById('res-vocab');
+  if (vocabFlags.length === 0) {
+    vocabEl.innerHTML = `<p>No vocabulary flags were marked.</p>`;
+  } else {
+    vocabEl.innerHTML = `<p>You flagged vocabulary as a barrier on the following items:</p>
+      <div class="vocab-item-list">${vocabFlags.map(f=>`<span class="vocab-tag">${f}</span>`).join('')}</div>`;
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
